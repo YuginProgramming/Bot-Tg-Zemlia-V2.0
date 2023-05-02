@@ -8,7 +8,7 @@ import { dataBot } from './values.js';
 let customerPhone;
 let customerName;
 let customerInfo = {};
-let selectedOrderRaw;
+
 
 const spreadsheetId = dataBot.googleSheetId;
 const phoneRegex = /^\d{10,12}$/;
@@ -40,6 +40,7 @@ const keyboards = {
 }
 
 export const anketaListiner = async() => {
+    let selectedOrderRaw;
     bot.onText(/\/start/ , (msg) => {
         customerPhone = undefined;
         customerName = undefined;
@@ -80,7 +81,7 @@ export const anketaListiner = async() => {
           });
       } else if(msg.text === 'Так, Оформити замовлення') {
           // переписати функції запису даних згідно рядка а не колонки
-          await sendToRawContact(customerPhone, customerName, selectedOrderRaw);
+          await sendToRawContact(customerInfo[chatId].phone, customerInfo[chatId].name, selectedOrderRaw);
           await sendToRawStatusDone(selectedOrderRaw);
           const range = `post!A${selectedOrderRaw}:I${selectedOrderRaw}`;
           const data = await getSpreadsheetData(spreadsheetId, range);
@@ -89,7 +90,7 @@ export const anketaListiner = async() => {
           const idToDelete = await googleFindMessageId(selectedOrderRaw)
           await changeMessage(idToDelete, message);
           }
-          bot.sendMessage(chatId, `Замовлення успішно оформлено. Дякую ${customerName}`);
+          bot.sendMessage(chatId, `Замовлення успішно оформлено. Дякую ${customerInfo[chatId].name}`);
       } else if (msg.text === 'Почати спочатку') {
         bot.sendMessage(chatId, '/start');
       } else if(msg.text === `Ні, я введу номер вручну` || msg.text === 'Ні, повторити введення') {
@@ -106,7 +107,7 @@ export const anketaListiner = async() => {
         if (msg.text.length >= 2) {
         customerName = msg.text;
         customerInfo[chatId].name = msg.text;
-        bot.sendMessage(chatId, `Ваш номер телефону: ${customerPhone}. Ваше імя ${customerName}. Дані вірні?` , {
+        bot.sendMessage(chatId, `Ваш номер телефону: ${customerInfo[chatId].phone}. Ваше імя ${customerInfo[chatId].name}. Дані вірні?` , {
           reply_markup: { keyboard: keyboards.dataConfirmation, resize_keyboard: true, one_time_keyboard: true },
         });
         };

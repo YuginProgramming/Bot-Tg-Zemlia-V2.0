@@ -1,6 +1,6 @@
 import bot from "./app.js";
-import { googleFindMessageId } from "./crawler.js"
-const channelId = '-1001783798562';
+import { dataBot } from './values.js';
+
 
 // Працює хай живе
 const deleteButton = async () => {
@@ -22,7 +22,7 @@ const changeMessage = async (messageId, message) => {
     // Додати інформацію про колонку, номер рядка передається в анкеті в аргумент
     //const messageId = 527;
     const newText = "📌 " + message;
-    await bot.editMessageText(newText, {chat_id: channelId, message_id: messageId});
+    await bot.editMessageText(newText, {chat_id: dataBot.channelId, message_id: messageId});
 
   } catch (err) {
     console.error(err);
