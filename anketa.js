@@ -83,7 +83,7 @@ export const anketaListiner = async() => {
           // переписати функції запису даних згідно рядка а не колонки
           await sendToRawContact(customerInfo[chatId].phone, customerInfo[chatId].name, selectedOrderRaw);
           await sendToRawStatusDone(selectedOrderRaw);
-          const range = `post!A${selectedOrderRaw}:I${selectedOrderRaw}`;
+          const range = `post!A${selectedOrderRaw}:E${selectedOrderRaw}`;
           const data = await getSpreadsheetData(spreadsheetId, range);
           if (data.values && data.values.length > 0) {
           const message = data.values[0].join('\n');
