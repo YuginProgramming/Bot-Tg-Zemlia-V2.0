@@ -3,6 +3,7 @@ import { sendToBaseMessageId } from './writegoog.js'
 import { getSpreadsheetData } from "./filedata.js";
 import { anketaListiner } from './anketa.js';
 import { dataBot } from './values.js';
+//checking git
 
 const bot = new TelegramBot(dataBot.telegramBotToken, { polling: true });
 export default bot;
