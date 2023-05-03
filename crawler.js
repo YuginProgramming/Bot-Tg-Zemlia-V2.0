@@ -32,7 +32,7 @@ const crawlerRaw = async (spreadsheetId, sheetName, triggerColumn) => {
     
   // Get row data for each row number
   const rowPromises = rowNumbers.map(rowNumber => {
-    const range = `${sheetName}!A${rowNumber}:I${rowNumber}`;
+    const range = `${sheetName}!A${rowNumber}:E${rowNumber}`;
     return getSpreadsheetData(spreadsheetId, range);
   });
   
